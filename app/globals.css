@@ -1,26 +1,81 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: oklch(0.985 0.008 95);
+  --tint: oklch(0.955 0.02 120);
+  --ink: oklch(0.24 0.025 150);
+  --muted: oklch(0.45 0.02 150);
+  --line: oklch(0.89 0.02 120);
+  --brand: oklch(0.38 0.08 155);
+  --brand-deep: oklch(0.29 0.06 155);
+  --cta: oklch(0.8 0.15 85);
+  --cta-hover: oklch(0.75 0.15 80);
+  --star: oklch(0.78 0.16 75);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-tint: var(--tint);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-brand-deep: var(--brand-deep);
+  --color-cta: var(--cta);
+  --color-cta-hover: var(--cta-hover);
+  --color-star: var(--star);
+  --font-heading: var(--font-bitter);
+  --font-sans: var(--font-hanken);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--bg) !important;
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg) !important;
+  color: var(--ink);
+  font-family: var(--font-hanken), system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-bitter), Georgia, serif;
+  text-wrap: balance;
+}
+
+.btn {
+  transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), background-color 160ms ease;
+}
+.btn:active {
+  transform: scale(0.97);
+}
+
+.rise {
+  animation: rise 520ms cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+.rise-2 { animation-delay: 70ms; }
+.rise-3 { animation-delay: 140ms; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+details summary::-webkit-details-marker { display: none; }
+details[open] .chev { transform: rotate(180deg); }
+.chev { transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1); }
+
+@media (hover: hover) and (pointer: fine) {
+  .lift { transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 200ms ease; }
+  .lift:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -14px oklch(0.29 0.06 155 / 0.35); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rise { animation: none; }
+  .btn, .lift, .chev { transition: none; }
 }
